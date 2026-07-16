@@ -1,0 +1,60 @@
+import type { AnatomicalSystem } from "../models/AnatomicalSystem";
+
+export const anatomicalSystems: AnatomicalSystem[] = [
+  {
+    id: "digestive",
+    areaId: "macroscopy",
+    name: "Sistema Digestivo",
+    description: "Protocolos do aparelho digestivo.",
+    order: 1,
+    active: true,
+  },
+  {
+    id: "respiratory",
+    areaId: "macroscopy",
+    name: "Sistema Respiratório",
+    description: "Protocolos do aparelho respiratório.",
+    order: 2,
+    active: true,
+  },
+  {
+    id: "gynecologic",
+    areaId: "macroscopy",
+    name: "Sistema Ginecológico",
+    description: "Protocolos de ginecologia.",
+    order: 3,
+    active: true,
+  },
+  {
+    id: "urologic",
+    areaId: "macroscopy",
+    name: "Sistema Urológico",
+    description: "Protocolos de urologia.",
+    order: 4,
+    active: true,
+  },
+  {
+    id: "breast",
+    areaId: "macroscopy",
+    name: "Mama",
+    description: "Protocolos de patologia mamária.",
+    order: 5,
+    active: true,
+  },
+  {
+    id: "head-neck",
+    areaId: "macroscopy",
+    name: "Cabeça e Pescoço",
+    description: "Protocolos de cabeça e pescoço.",
+    order: 6,
+    active: true,
+  },
+  {
+    id: "endocrine",
+    areaId: "macroscopy",
+    name: "Sistema Endócrino",
+    description: "Protocolos das glândulas endócrinas.",
+    order: 7,
+    active: true,
+  },
+];
