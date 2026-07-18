@@ -2,7 +2,6 @@ import { anatomicalSystems } from "../data/system";
 import type { AnatomicalSystem } from "../models/AnatomicalSystem";
 
 export class AnatomicalSystemService {
-
   static getAll(): AnatomicalSystem[] {
     return anatomicalSystems;
   }

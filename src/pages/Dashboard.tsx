@@ -1,7 +1,7 @@
-import { SystemService } from "../services/anatomicalSystem.service";
+import { AnatomicalSystemService } from "../services/anatomicalSystem.service";
 
 export default function Dashboard() {
-  const sistemas = SystemService.getActive();
+  const sistemas = AnatomicalSystemService.getActive();
 
   return (
     <section className="dashboard">
@@ -16,7 +16,6 @@ export default function Dashboard() {
         {sistemas.map((sistema) => (
           <div key={sistema.id} className="card">
             <h3>{sistema.name}</h3>
-
             <p>{sistema.description}</p>
           </div>
         ))}
