@@ -1,0 +1,111 @@
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid #d9e2ec;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 18px 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  flex-shrink: 0;
+}
+
+.logo-image {
+  display: block;
+  width: 340px;
+  height: auto;
+}
+
+.search {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search input {
+  width: 100%;
+  max-width: 460px;
+
+  padding: 14px 20px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+
+  font-size: 15px;
+  outline: none;
+
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search input:focus {
+  border-color: #0f4c81;
+  box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.15);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #d9e2ec;
+}
+
+.navbar-container {
+  max-width: 1400px;
+  margin: 0 auto;
+
+  display: flex;
+  gap: 32px;
+
+  padding: 16px 40px;
+}
+
+.navbar a {
+  color: #0f4c81;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.navbar a:hover {
+  color: #2f6fa5;
+}
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+.main-content {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 0 40px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  margin-top: 60px;
+  padding: 30px 40px;
+
+  text-align: center;
+
+  background: #f5f7fa;
+  color: #64748b;
+  border-top: 1px solid #d9e2ec;
+}

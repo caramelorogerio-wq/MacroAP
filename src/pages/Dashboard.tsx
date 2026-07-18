@@ -1,25 +1,44 @@
+import { useNavigate } from "react-router-dom";
 import { AnatomicalSystemService } from "../services/anatomicalSystem.service";
+import "../styles/dashboard.css";
 
 export default function Dashboard() {
-  const sistemas = AnatomicalSystemService.getActive();
+  const navigate = useNavigate();
+  const systems = AnatomicalSystemService.getAll();
 
   return (
-    <section className="dashboard">
-      <h2>Bem-vinda ao MacroAP</h2>
+    <>
+      <section className="hero">
+        <h1>Protocolos Macroscópicos</h1>
 
-      <p>
-        Selecione um sistema anatómico para consultar protocolos,
-        recomendações e documentação.
-      </p>
+        <p>
+          Bem-vindo ao MacroAP, um portal de protocolos macroscópicos de Anatomia
+          Patológica.
+        </p>
 
-      <div className="cards">
-        {sistemas.map((sistema) => (
-          <div key={sistema.id} className="card">
-            <h3>{sistema.name}</h3>
-            <p>{sistema.description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+        <input
+          type="text"
+          placeholder="Pesquisar protocolos..."
+        />
+      </section>
+
+      <section className="systems">
+        <h2>Sistemas Anatómicos</h2>
+
+        <div className="cards">
+          {systems.map((system) => (
+            <div
+              key={system.id}
+              className="card"
+              onClick={() => navigate(`/system/${system.id}`)}
+            >
+              <h3>{system.name}</h3>
+
+              <p>{system.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }

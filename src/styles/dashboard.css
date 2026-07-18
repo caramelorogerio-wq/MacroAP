@@ -1,0 +1,69 @@
+/* HERO */
+
+.hero {
+  background: linear-gradient(135deg, #0f4c81, #2f6fa5);
+  color: white;
+  border-radius: 16px;
+  padding: 50px;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  margin: 0 0 20px;
+  font-size: 2.5rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+.hero input {
+  margin-top: 25px;
+  width: 100%;
+  max-width: 500px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* SISTEMAS */
+
+.systems h2 {
+  color: #0f4c81;
+  margin-bottom: 25px;
+}
+
+/* CARDS */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #d9e2ec;
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(15, 76, 129, 0.15);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #0f4c81;
+}
+
+.card p {
+  color: #475569;
+  line-height: 1.5;
+}
