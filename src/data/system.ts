@@ -57,4 +57,12 @@ export const anatomicalSystems: AnatomicalSystem[] = [
     order: 7,
     active: true,
   },
+  {
+    id: "dermatology",
+    areaId: "macroscopy",
+    name: "Dermatologia",
+    description: "Protocolos de dermatopatologia.",
+    order: 8,
+    active: true,
+  },
 ];

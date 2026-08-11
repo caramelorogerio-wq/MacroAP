@@ -9,33 +9,63 @@ export default function Dashboard() {
   return (
     <>
       <section className="hero">
-        <h1>Protocolos Macroscópicos</h1>
+        <div className="hero-content">
+          <span className="hero-label">MACROAP</span>
 
-        <p>
-          Bem-vindo ao MacroAP, um portal de protocolos macroscópicos de Anatomia
-          Patológica.
-        </p>
+          <h1>
+            Protocolos Macroscópicos
+            <br />
+            de Anatomia Patológica
+          </h1>
 
-        <input
-          type="text"
-          placeholder="Pesquisar protocolos..."
-        />
+          <p>
+            Biblioteca digital de protocolos macroscópicos, organizada por
+            sistemas anatómicos e orientada para a prática clínica.
+          </p>
+
+          <div className="hero-search">
+            <input
+              type="search"
+              placeholder="Pesquisar protocolos, órgãos ou procedimentos..."
+              aria-label="Pesquisar protocolos, órgãos ou procedimentos"
+            />
+          </div>
+        </div>
       </section>
 
       <section className="systems">
-        <h2>Sistemas Anatómicos</h2>
+        <div className="section-header">
+          <div>
+            <span className="section-label">CONSULTA</span>
+            <h2>Sistemas Anatómicos</h2>
+          </div>
+
+          <p>
+            Selecione um sistema para consultar os órgãos e protocolos
+            disponíveis.
+          </p>
+        </div>
 
         <div className="cards">
           {systems.map((system) => (
-            <div
+            <article
               key={system.id}
               className="card"
               onClick={() => navigate(`/system/${system.id}`)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  navigate(`/system/${system.id}`);
+                }
+              }}
             >
               <h3>{system.name}</h3>
 
               <p>{system.description}</p>
-            </div>
+
+              <span className="card-link">Consultar protocolos →</span>
+            </article>
           ))}
         </div>
       </section>
