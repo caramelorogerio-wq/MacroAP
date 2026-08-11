@@ -41,4 +41,12 @@ export const organs: Organ[] = [
     order: 1,
     active: true,
   },
+  {
+    id: "skin",
+    anatomicalSystemId: "dermatology",
+    name: "Pele",
+    description: "Pele e anexos cutâneos.",
+    order: 1,
+    active: true,
+  },
 ];
