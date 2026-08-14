@@ -8,16 +8,27 @@ import MainLayout from "./components/layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import OrganPage from "./pages/OrganPage";
 import SpecimenPage from "./pages/SpecimenPage";
+import ProtocolPage from "./pages/ProtocolPage";
 
 function App() {
   return (
     <MainLayout>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/organs/:systemId" element={<OrganPage />} />
+
+        <Route
+          path="/organs/:systemId"
+          element={<OrganPage />}
+        />
+
         <Route
           path="/specimens/:systemId/:organId"
           element={<SpecimenPage />}
+        />
+
+        <Route
+          path="/protocols/:protocolId"
+          element={<ProtocolPage />}
         />
       </Routes>
     </MainLayout>

@@ -1,0 +1,308 @@
+.protocol-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+
+.protocol-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: #15558a;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.protocol-back:hover {
+  text-decoration: underline;
+}
+
+.protocol-header {
+  margin-bottom: 36px;
+  padding: 36px 40px;
+  border: 1px solid #dbe5ef;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(25, 65, 100, 0.06);
+}
+
+.protocol-eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #5f7890;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.protocol-header h1 {
+  margin: 0 0 12px;
+  color: #123f68;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.protocol-description {
+  max-width: 760px;
+  margin: 0 0 24px;
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.protocol-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.protocol-meta-item {
+  padding: 8px 14px;
+  border: 1px solid #dbe5ef;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 14px;
+}
+
+.protocol-meta-item strong {
+  color: #123f68;
+}
+
+.protocol-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.protocol-section {
+  padding: 28px 32px;
+  border: 1px solid #dbe5ef;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(25, 65, 100, 0.04);
+}
+
+.protocol-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.protocol-section-number {
+  display: flex;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #eaf3fb;
+  color: #15558a;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.protocol-section h2 {
+  margin: 3px 0 6px;
+  color: #173f63;
+  font-size: 20px;
+}
+
+.protocol-section p {
+  margin: 0;
+  color: #718096;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   CAMPOS
+   ============================================================ */
+
+.protocol-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding-left: 54px;
+}
+
+.protocol-field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 7px;
+  width: 100%;
+}
+
+.protocol-field > label:not(.boolean-field) {
+  display: block;
+  margin: 0;
+  color: #234b6d;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.required-mark {
+  color: #b42318;
+  font-weight: 700;
+}
+
+.field-description {
+  display: block;
+  color: #7b8794;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.protocol-field input,
+.protocol-field textarea,
+.protocol-field select {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 11px 13px;
+  border: 1px solid #cfdbe7;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #243b53;
+  font-family: inherit;
+  font-size: 15px;
+  text-align: left;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.protocol-field input:focus,
+.protocol-field textarea:focus,
+.protocol-field select:focus {
+  border-color: #4b87b5;
+  box-shadow: 0 0 0 3px rgba(75, 135, 181, 0.12);
+}
+
+.protocol-field input::placeholder,
+.protocol-field textarea::placeholder {
+  color: #9aa7b5;
+}
+
+.protocol-field textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.protocol-field select {
+  cursor: pointer;
+}
+
+/* ============================================================
+   BOOLEAN
+   ============================================================ */
+
+.boolean-field {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 9px;
+  width: fit-content !important;
+  color: #475569 !important;
+  font-weight: 500 !important;
+  text-align: left !important;
+  cursor: pointer;
+}
+
+.boolean-field input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* ============================================================
+   MEDIÇÕES
+   ============================================================ */
+
+.measurement-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.measurement-field input {
+  flex: 1;
+}
+
+.field-unit {
+  min-width: 32px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   CAMPOS FUTUROS
+   ============================================================ */
+
+.field-placeholder {
+  padding: 14px 16px;
+  border: 1px dashed #cbd8e5;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #718096;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 700px) {
+  .protocol-page {
+    padding: 24px 16px 60px;
+  }
+
+  .protocol-header {
+    padding: 26px 22px;
+  }
+
+  .protocol-header h1 {
+    font-size: 26px;
+  }
+
+  .protocol-section {
+    padding: 20px;
+  }
+
+  .protocol-section-header {
+    gap: 12px;
+  }
+
+  .protocol-fields {
+    padding-left: 0;
+  }
+
+  .protocol-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .measurement-field {
+    max-width: none;
+  }
+}
