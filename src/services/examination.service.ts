@@ -66,6 +66,45 @@ export class ExaminationService {
     return examinations[index];
   }
 
+  static start(id: string): Examination | undefined {
+    const examination = this.getById(id);
+
+    if (!examination) {
+      return undefined;
+    }
+
+    return this.update({
+      ...examination,
+      status: "InProgress",
+    });
+  }
+
+  static complete(id: string): Examination | undefined {
+    const examination = this.getById(id);
+
+    if (!examination) {
+      return undefined;
+    }
+
+    return this.update({
+      ...examination,
+      status: "Completed",
+    });
+  }
+
+  static archive(id: string): Examination | undefined {
+    const examination = this.getById(id);
+
+    if (!examination) {
+      return undefined;
+    }
+
+    return this.update({
+      ...examination,
+      status: "Archived",
+    });
+  }
+
   static delete(id: string): void {
     const examinations = this.getAll().filter(
       (examination) => examination.id !== id

@@ -37,38 +37,39 @@ export default function ProtocolPage() {
     ? organs.find((item) => item.id === specimenType.organId)
     : undefined;
 
-  const [examination] = useState<Examination | null>(() => {
-    if (!protocol || !procedure || !specimenType || !organ) {
-      return null;
-    }
+  const [examination, setExamination] =
+    useState<Examination | null>(() => {
+      if (!protocol || !procedure || !specimenType || !organ) {
+        return null;
+      }
 
-    const existingExamination = ExaminationService
-      .getAll()
-      .find(
-        (item) =>
-          item.protocolId === protocol.id &&
-          item.status !== "Archived"
-      );
+      const existingExamination = ExaminationService
+        .getAll()
+        .find(
+          (item) =>
+            item.protocolId === protocol.id &&
+            item.status !== "Archived"
+        );
 
-    if (existingExamination) {
-      return existingExamination;
-    }
+      if (existingExamination) {
+        return existingExamination;
+      }
 
-    const now = new Date();
+      const now = new Date();
 
-    const newExamination: Examination = {
-      id: crypto.randomUUID(),
-      protocolId: protocol.id,
-      organId: organ.id,
-      specimenTypeId: specimenType.id,
-      procedureId: procedure.id,
-      createdAt: now,
-      updatedAt: now,
-      status: "Draft",
-    };
+      const newExamination: Examination = {
+        id: crypto.randomUUID(),
+        protocolId: protocol.id,
+        organId: organ.id,
+        specimenTypeId: specimenType.id,
+        procedureId: procedure.id,
+        createdAt: now,
+        updatedAt: now,
+        status: "Draft",
+      };
 
-    return ExaminationService.create(newExamination);
-  });
+      return ExaminationService.create(newExamination);
+    });
 
   const [fieldValues, setFieldValues] = useState<FieldValue[]>(() => {
     if (!examination) {
@@ -80,7 +81,13 @@ export default function ProtocolPage() {
     );
   });
 
-  if (!protocol || !procedure || !specimenType || !organ || !examination) {
+  if (
+    !protocol ||
+    !procedure ||
+    !specimenType ||
+    !organ ||
+    !examination
+  ) {
     return (
       <main className="protocol-page">
         <button
@@ -129,10 +136,34 @@ export default function ProtocolPage() {
       return [...currentValues, savedValue];
     });
 
-    ExaminationService.update({
+    const updatedExamination = ExaminationService.update({
       ...examination,
       updatedAt: new Date(),
     });
+
+    setExamination(updatedExamination);
+  };
+
+  const startExamination = () => {
+    const updatedExamination =
+      ExaminationService.start(examination.id);
+
+    if (updatedExamination) {
+      setExamination(updatedExamination);
+    }
+  };
+
+  const completeExamination = () => {
+    if (examination.status !== "InProgress") {
+      return;
+    }
+
+    const updatedExamination =
+      ExaminationService.complete(examination.id);
+
+    if (updatedExamination) {
+      setExamination(updatedExamination);
+    }
   };
 
   const getFieldValue = (fieldId: string) => {
@@ -149,6 +180,10 @@ export default function ProtocolPage() {
         section.protocolId === protocol.id && section.active
     )
     .sort((a, b) => a.order - b.order);
+
+  const fieldsDisabled =
+    examination.status === "Completed" ||
+    examination.status === "Archived";
 
   return (
     <main className="protocol-page">
@@ -188,6 +223,34 @@ export default function ProtocolPage() {
             <strong>Exame:</strong> {examination.status}
           </span>
         </div>
+
+        <div className="protocol-actions">
+          {examination.status === "Draft" && (
+            <button
+              type="button"
+              className="protocol-action-button"
+              onClick={startExamination}
+            >
+              Iniciar exame
+            </button>
+          )}
+
+          {examination.status === "InProgress" && (
+            <button
+              type="button"
+              className="protocol-action-button"
+              onClick={completeExamination}
+            >
+              Concluir exame
+            </button>
+          )}
+
+          {examination.status === "Completed" && (
+            <span className="protocol-completed-message">
+              Exame concluído
+            </span>
+          )}
+        </div>
       </section>
 
       <section className="protocol-sections">
@@ -195,7 +258,8 @@ export default function ProtocolPage() {
           const sectionFields = fields
             .filter(
               (field) =>
-                field.sectionId === section.id && field.active
+                field.sectionId === section.id &&
+                field.active
             )
             .sort((a, b) => a.order - b.order);
 
@@ -257,6 +321,7 @@ export default function ProtocolPage() {
                           <input
                             id={field.id}
                             type="text"
+                            disabled={fieldsDisabled}
                             value={
                               typeof currentValue === "string"
                                 ? currentValue
@@ -276,6 +341,7 @@ export default function ProtocolPage() {
                           <textarea
                             id={field.id}
                             rows={4}
+                            disabled={fieldsDisabled}
                             value={
                               typeof currentValue === "string"
                                 ? currentValue
@@ -295,6 +361,7 @@ export default function ProtocolPage() {
                           <input
                             id={field.id}
                             type="number"
+                            disabled={fieldsDisabled}
                             value={
                               typeof currentValue === "number"
                                 ? currentValue
@@ -317,6 +384,7 @@ export default function ProtocolPage() {
                             id={field.id}
                             type="number"
                             step="0.01"
+                            disabled={fieldsDisabled}
                             value={
                               typeof currentValue === "number"
                                 ? currentValue
@@ -338,6 +406,7 @@ export default function ProtocolPage() {
                           <input
                             id={field.id}
                             type="date"
+                            disabled={fieldsDisabled}
                             value={
                               typeof currentValue === "string"
                                 ? currentValue
@@ -357,6 +426,7 @@ export default function ProtocolPage() {
                             <input
                               id={field.id}
                               type="checkbox"
+                              disabled={fieldsDisabled}
                               checked={currentValue === true}
                               onChange={(event) =>
                                 updateFieldValue(
@@ -372,6 +442,7 @@ export default function ProtocolPage() {
                         {field.type === "select" && (
                           <select
                             id={field.id}
+                            disabled={fieldsDisabled}
                             value={
                               typeof currentValue === "string"
                                 ? currentValue
@@ -403,6 +474,7 @@ export default function ProtocolPage() {
                           <select
                             id={field.id}
                             multiple
+                            disabled={fieldsDisabled}
                             value={
                               typeof currentValue === "string" &&
                               currentValue.length > 0
@@ -438,6 +510,7 @@ export default function ProtocolPage() {
                               id={field.id}
                               type="number"
                               step="0.01"
+                              disabled={fieldsDisabled}
                               value={
                                 typeof currentValue === "number"
                                   ? currentValue
