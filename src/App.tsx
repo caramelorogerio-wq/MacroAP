@@ -15,7 +15,10 @@ function App() {
   return (
     <MainLayout>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route
+          path="/"
+          element={<Dashboard />}
+        />
 
         <Route
           path="/organs/:systemId"

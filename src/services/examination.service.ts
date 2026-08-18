@@ -29,6 +29,13 @@ export class ExaminationService {
     );
   }
 
+  static getByProtocolId(protocolId: string): Examination[] {
+    return this.getAll().filter(
+      (examination) =>
+        examination.protocolId === protocolId
+    );
+  }
+
   static create(examination: Examination): Examination {
     const examinations = this.getAll();
 
@@ -40,6 +47,28 @@ export class ExaminationService {
     );
 
     return examination;
+  }
+
+  static createForProtocol(
+    protocolId: string,
+    organId: string,
+    specimenTypeId: string,
+    procedureId: string
+  ): Examination {
+    const now = new Date();
+
+    const examination: Examination = {
+      id: crypto.randomUUID(),
+      protocolId,
+      organId,
+      specimenTypeId,
+      procedureId,
+      createdAt: now,
+      updatedAt: now,
+      status: "Draft",
+    };
+
+    return this.create(examination);
   }
 
   static update(examination: Examination): Examination {
