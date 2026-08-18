@@ -81,6 +81,9 @@ export default function ProtocolPage() {
     );
   });
 
+  const [validationError, setValidationError] =
+    useState<string[]>([]);
+
   if (
     !protocol ||
     !procedure ||
@@ -142,9 +145,15 @@ export default function ProtocolPage() {
     });
 
     setExamination(updatedExamination);
+
+    setValidationError((currentErrors) =>
+      currentErrors.filter((id) => id !== fieldId)
+    );
   };
 
   const startExamination = () => {
+    setValidationError([]);
+
     const updatedExamination =
       ExaminationService.start(examination.id);
 
@@ -153,10 +162,68 @@ export default function ProtocolPage() {
     }
   };
 
+  const isFieldValueFilled = (
+    value: string | number | boolean | null | undefined
+  ): boolean => {
+    if (value === null || value === undefined) {
+      return false;
+    }
+
+    if (typeof value === "string") {
+      return value.trim().length > 0;
+    }
+
+    if (typeof value === "number") {
+      return true;
+    }
+
+    if (typeof value === "boolean") {
+      return value;
+    }
+
+    return false;
+  };
+
+  const validateRequiredFields = (): string[] => {
+    const requiredFields = fields.filter(
+      (field) =>
+        field.active &&
+        field.required &&
+        field.sectionId &&
+        sections.some(
+          (section) =>
+            section.id === field.sectionId &&
+            section.protocolId === protocol.id &&
+            section.active
+        )
+    );
+
+    const missingFields = requiredFields.filter((field) => {
+      const value = fieldValues.find(
+        (item) =>
+          item.examinationId === examination.id &&
+          item.fieldId === field.id
+      )?.value;
+
+      return !isFieldValueFilled(value);
+    });
+
+    return missingFields.map((field) => field.id);
+  };
+
   const completeExamination = () => {
     if (examination.status !== "InProgress") {
       return;
     }
+
+    const missingFieldIds = validateRequiredFields();
+
+    if (missingFieldIds.length > 0) {
+      setValidationError(missingFieldIds);
+      return;
+    }
+
+    setValidationError([]);
 
     const updatedExamination =
       ExaminationService.complete(examination.id);
@@ -251,6 +318,19 @@ export default function ProtocolPage() {
             </span>
           )}
         </div>
+
+        {validationError.length > 0 && (
+          <div className="protocol-validation-error">
+            <strong>
+              Existem campos obrigatórios por preencher.
+            </strong>
+
+            <p>
+              Preencha os campos assinalados com * antes de
+              concluir o exame.
+            </p>
+          </div>
+        )}
       </section>
 
       <section className="protocol-sections">
@@ -295,9 +375,16 @@ export default function ProtocolPage() {
 
                     const currentValue = getFieldValue(field.id);
 
+                    const fieldHasError =
+                      validationError.includes(field.id);
+
                     return (
                       <div
-                        className="protocol-field"
+                        className={`protocol-field ${
+                          fieldHasError
+                            ? "protocol-field-error"
+                            : ""
+                        }`}
                         key={field.id}
                       >
                         <label htmlFor={field.id}>
@@ -314,6 +401,12 @@ export default function ProtocolPage() {
                         {field.description && (
                           <span className="field-description">
                             {field.description}
+                          </span>
+                        )}
+
+                        {fieldHasError && (
+                          <span className="field-error-message">
+                            Campo obrigatório.
                           </span>
                         )}
 
