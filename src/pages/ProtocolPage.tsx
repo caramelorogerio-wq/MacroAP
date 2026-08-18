@@ -18,13 +18,28 @@ import { FieldValueService } from "../services/fieldValue.service";
 import "../styles/protocol.css";
 
 export default function ProtocolPage() {
-  const { protocolId } = useParams<{ protocolId: string }>();
+  const { protocolId, examinationId } = useParams<{
+    protocolId?: string;
+    examinationId?: string;
+  }>();
+
   const navigate = useNavigate();
 
-  const protocol = protocols.find((item) => item.id === protocolId);
+  const existingExamination = examinationId
+    ? ExaminationService.getById(examinationId)
+    : undefined;
+
+  const resolvedProtocolId =
+    existingExamination?.protocolId ?? protocolId;
+
+  const protocol = protocols.find(
+    (item) => item.id === resolvedProtocolId
+  );
 
   const procedure = protocol
-    ? procedures.find((item) => item.id === protocol.procedureId)
+    ? procedures.find(
+        (item) => item.id === protocol.procedureId
+      )
     : undefined;
 
   const specimenType = procedure
@@ -34,25 +49,30 @@ export default function ProtocolPage() {
     : undefined;
 
   const organ = specimenType
-    ? organs.find((item) => item.id === specimenType.organId)
+    ? organs.find(
+        (item) => item.id === specimenType.organId
+      )
     : undefined;
 
   const [examination, setExamination] =
     useState<Examination | null>(() => {
+      if (existingExamination) {
+        return existingExamination;
+      }
+
       if (!protocol || !procedure || !specimenType || !organ) {
         return null;
       }
 
-      const existingExamination = ExaminationService
-        .getAll()
-        .find(
+      const existingProtocolExamination =
+        ExaminationService.getAll().find(
           (item) =>
             item.protocolId === protocol.id &&
             item.status !== "Archived"
         );
 
-      if (existingExamination) {
-        return existingExamination;
+      if (existingProtocolExamination) {
+        return existingProtocolExamination;
       }
 
       const now = new Date();
@@ -102,11 +122,11 @@ export default function ProtocolPage() {
         </button>
 
         <section className="protocol-header">
-          <h1>Protocolo não encontrado</h1>
+          <h1>Exame não encontrado</h1>
 
           <p className="protocol-description">
-            Não foi possível encontrar todos os dados necessários
-            para iniciar este exame.
+            Não foi possível encontrar o exame ou o protocolo
+            associado.
           </p>
         </section>
       </main>
@@ -244,7 +264,8 @@ export default function ProtocolPage() {
   const protocolSections = sections
     .filter(
       (section) =>
-        section.protocolId === protocol.id && section.active
+        section.protocolId === protocol.id &&
+        section.active
     )
     .sort((a, b) => a.order - b.order);
 
@@ -373,7 +394,8 @@ export default function ProtocolPage() {
                       )
                       .sort((a, b) => a.order - b.order);
 
-                    const currentValue = getFieldValue(field.id);
+                    const currentValue =
+                      getFieldValue(field.id);
 
                     const fieldHasError =
                       validationError.includes(field.id);
@@ -465,7 +487,9 @@ export default function ProtocolPage() {
                                 field.id,
                                 event.target.value === ""
                                   ? null
-                                  : Number(event.target.value)
+                                  : Number(
+                                      event.target.value
+                                    )
                               )
                             }
                             placeholder="Introduzir valor..."
@@ -488,7 +512,9 @@ export default function ProtocolPage() {
                                 field.id,
                                 event.target.value === ""
                                   ? null
-                                  : Number(event.target.value)
+                                  : Number(
+                                      event.target.value
+                                    )
                               )
                             }
                             placeholder="Introduzir valor..."
@@ -520,7 +546,9 @@ export default function ProtocolPage() {
                               id={field.id}
                               type="checkbox"
                               disabled={fieldsDisabled}
-                              checked={currentValue === true}
+                              checked={
+                                currentValue === true
+                              }
                               onChange={(event) =>
                                 updateFieldValue(
                                   field.id,
@@ -569,7 +597,8 @@ export default function ProtocolPage() {
                             multiple
                             disabled={fieldsDisabled}
                             value={
-                              typeof currentValue === "string" &&
+                              typeof currentValue ===
+                                "string" &&
                               currentValue.length > 0
                                 ? currentValue.split(",")
                                 : []
@@ -605,7 +634,8 @@ export default function ProtocolPage() {
                               step="0.01"
                               disabled={fieldsDisabled}
                               value={
-                                typeof currentValue === "number"
+                                typeof currentValue ===
+                                "number"
                                   ? currentValue
                                   : ""
                               }
@@ -614,7 +644,9 @@ export default function ProtocolPage() {
                                   field.id,
                                   event.target.value === ""
                                     ? null
-                                    : Number(event.target.value)
+                                    : Number(
+                                        event.target.value
+                                      )
                                 )
                               }
                               placeholder="Valor..."
@@ -636,7 +668,8 @@ export default function ProtocolPage() {
 
                         {field.type === "photo" && (
                           <div className="field-placeholder">
-                            Campo de fotografia — implementação futura
+                            Campo de fotografia —
+                            implementação futura
                           </div>
                         )}
                       </div>

@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import OrganPage from "./pages/OrganPage";
 import SpecimenPage from "./pages/SpecimenPage";
 import ProtocolPage from "./pages/ProtocolPage";
+import ExaminationsPage from "./pages/ExaminationsPage";
 
 function App() {
   return (
@@ -28,6 +29,16 @@ function App() {
 
         <Route
           path="/protocols/:protocolId"
+          element={<ProtocolPage />}
+        />
+
+        <Route
+          path="/examinations"
+          element={<ExaminationsPage />}
+        />
+
+        <Route
+          path="/examinations/:examinationId"
           element={<ProtocolPage />}
         />
       </Routes>

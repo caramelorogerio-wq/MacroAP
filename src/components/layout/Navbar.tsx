@@ -5,9 +5,15 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/">Início</Link>
+
         <Link to="/">Sistemas Anatómicos</Link>
+
+        <Link to="/examinations">Exames</Link>
+
         <Link to="/">Protocolos</Link>
+
         <Link to="/">Favoritos</Link>
+
         <Link to="/">Sobre</Link>
       </div>
     </nav>
