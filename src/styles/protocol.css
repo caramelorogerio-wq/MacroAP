@@ -22,6 +22,10 @@
   text-decoration: underline;
 }
 
+/* ============================================================
+   CABEÇALHO
+   ============================================================ */
+
 .protocol-header {
   margin-bottom: 36px;
   padding: 36px 40px;
@@ -74,6 +78,86 @@
 .protocol-meta-item strong {
   color: #123f68;
 }
+
+/* ============================================================
+   AÇÕES DO EXAME
+   ============================================================ */
+
+.protocol-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.protocol-action-button {
+  min-height: 42px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #15558a;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.protocol-action-button:hover {
+  background: #123f68;
+  box-shadow: 0 4px 12px rgba(21, 85, 138, 0.18);
+}
+
+.protocol-action-button:active {
+  transform: translateY(1px);
+}
+
+.protocol-completed-message {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 1px solid #cfe4d5;
+  border-radius: 8px;
+  background: #f2faf4;
+  color: #276749;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   VALIDAÇÃO
+   ============================================================ */
+
+.protocol-validation-error {
+  margin-top: 20px;
+  padding: 14px 16px;
+  border: 1px solid #f0c8c5;
+  border-radius: 8px;
+  background: #fff6f5;
+  color: #8a2c24;
+}
+
+.protocol-validation-error strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.protocol-validation-error p {
+  margin: 0;
+  color: #8a2c24;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   SECÇÕES
+   ============================================================ */
 
 .protocol-sections {
   display: flex;
@@ -149,6 +233,7 @@
   color: #234b6d;
   font-size: 15px;
   font-weight: 600;
+  line-height: 1.4;
   text-align: left;
 }
 
@@ -159,13 +244,18 @@
 
 .field-description {
   display: block;
+  margin: 0;
   color: #7b8794;
   font-size: 13px;
   line-height: 1.5;
   text-align: left;
 }
 
-.protocol-field input,
+/* ============================================================
+   INPUTS / SELECTS / TEXTAREAS
+   ============================================================ */
+
+.protocol-field input:not([type="checkbox"]),
 .protocol-field textarea,
 .protocol-field select {
   display: block;
@@ -179,14 +269,31 @@
   color: #243b53;
   font-family: inherit;
   font-size: 15px;
+  line-height: 1.4;
   text-align: left;
   outline: none;
   transition:
     border-color 0.15s ease,
-    box-shadow 0.15s ease;
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
-.protocol-field input:focus,
+.protocol-field input:not([type="checkbox"]) {
+  min-height: 44px;
+}
+
+.protocol-field textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.protocol-field select {
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.protocol-field input:not([type="checkbox"]):focus,
 .protocol-field textarea:focus,
 .protocol-field select:focus {
   border-color: #4b87b5;
@@ -198,14 +305,17 @@
   color: #9aa7b5;
 }
 
-.protocol-field textarea {
-  min-height: 100px;
-  resize: vertical;
-  line-height: 1.5;
-}
+/* ============================================================
+   CAMPOS DESATIVADOS
+   ============================================================ */
 
-.protocol-field select {
-  cursor: pointer;
+.protocol-field input:disabled,
+.protocol-field textarea:disabled,
+.protocol-field select:disabled {
+  background: #f8fafc;
+  color: #64748b;
+  cursor: not-allowed;
+  opacity: 1;
 }
 
 /* ============================================================
@@ -218,17 +328,25 @@
   align-items: center;
   gap: 9px;
   width: fit-content !important;
+  margin: 2px 0 0;
   color: #475569 !important;
   font-weight: 500 !important;
+  line-height: 1.4;
   text-align: left !important;
   cursor: pointer;
 }
 
-.boolean-field input {
-  width: 18px;
-  height: 18px;
+.boolean-field input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 18px !important;
+  height: 18px !important;
   margin: 0;
+  padding: 0;
   cursor: pointer;
+}
+
+.boolean-field input[type="checkbox"]:disabled {
+  cursor: not-allowed;
 }
 
 /* ============================================================
@@ -248,10 +366,40 @@
 }
 
 .field-unit {
+  flex: 0 0 auto;
   min-width: 32px;
   color: #64748b;
   font-size: 14px;
   font-weight: 600;
+}
+
+/* ============================================================
+   VALIDAÇÃO DOS CAMPOS
+   ============================================================ */
+
+.protocol-field-error
+  input:not([type="checkbox"]),
+.protocol-field-error textarea,
+.protocol-field-error select {
+  border-color: #d97b72;
+  background: #fffafa;
+}
+
+.protocol-field-error
+  input:not([type="checkbox"]):focus,
+.protocol-field-error textarea:focus,
+.protocol-field-error select:focus {
+  border-color: #c75c51;
+  box-shadow: 0 0 0 3px rgba(199, 92, 81, 0.12);
+}
+
+.field-error-message {
+  display: block;
+  margin: 0;
+  color: #b42318;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 /* ============================================================
@@ -265,6 +413,7 @@
   background: #f8fafc;
   color: #718096;
   font-size: 14px;
+  line-height: 1.5;
   text-align: left;
 }
 
@@ -300,6 +449,18 @@
   .protocol-meta {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .protocol-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .protocol-action-button,
+  .protocol-completed-message {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
   }
 
   .measurement-field {
