@@ -20,6 +20,7 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .examinations-header h1 {
@@ -35,6 +36,131 @@
   font-size: 16px;
   line-height: 1.7;
 }
+
+/* ============================================================
+   NOVO EXAME
+   ============================================================ */
+
+.examinations-new {
+  margin-bottom: 24px;
+  padding: 24px 28px;
+  border: 1px solid #dbe5ef;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(25, 65, 100, 0.04);
+}
+
+.examinations-new h2 {
+  margin: 0 0 6px;
+  color: #173f63;
+  font-size: 19px;
+}
+
+.examinations-new p {
+  margin: 0 0 18px;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.examinations-new-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.examination-new-button {
+  padding: 10px 16px;
+  border: 1px solid #15558a;
+  border-radius: 8px;
+  background: #15558a;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.examination-new-button:hover {
+  background: #123f68;
+  border-color: #123f68;
+  box-shadow: 0 4px 12px rgba(21, 85, 138, 0.18);
+}
+
+/* ============================================================
+   FILTROS
+   ============================================================ */
+
+.examinations-filters {
+  margin-bottom: 24px;
+}
+
+.examinations-filter-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.examinations-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid #dbe5ef;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #64748b;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.examinations-filter:hover {
+  border-color: #b9cede;
+  color: #15558a;
+}
+
+.examinations-filter.active {
+  border-color: #15558a;
+  background: #15558a;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(21, 85, 138, 0.14);
+}
+
+.examinations-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: #eef3f7;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.examinations-filter.active
+  .examinations-filter-count {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+/* ============================================================
+   LISTA
+   ============================================================ */
 
 .examinations-list {
   display: flex;
@@ -90,6 +216,14 @@
   font-size: 13px;
 }
 
+.examination-card-side {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
 .examination-status {
   flex: 0 0 auto;
   padding: 7px 12px;
@@ -122,6 +256,66 @@
   color: #737373;
 }
 
+/* ============================================================
+   AÇÕES
+   ============================================================ */
+
+.examination-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.examination-action {
+  padding: 7px 11px;
+  border: 1px solid #cfdbe7;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #475569;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.examination-action:hover {
+  border-color: #9fb8cc;
+  background: #f8fafc;
+  color: #15558a;
+}
+
+.examination-action-primary {
+  border-color: #15558a;
+  background: #15558a;
+  color: #ffffff;
+}
+
+.examination-action-primary:hover {
+  border-color: #123f68;
+  background: #123f68;
+  color: #ffffff;
+}
+
+.examination-action-danger {
+  border-color: #e2b8b5;
+  color: #b42318;
+}
+
+.examination-action-danger:hover {
+  border-color: #d99a95;
+  background: #fff7f6;
+  color: #9f1c14;
+}
+
+/* ============================================================
+   VAZIO
+   ============================================================ */
+
 .examinations-empty {
   padding: 50px 30px;
   border: 1px dashed #cbd8e5;
@@ -141,6 +335,10 @@
   color: #718096;
 }
 
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
 @media (max-width: 700px) {
   .examinations-page {
     padding: 24px 16px 60px;
@@ -154,9 +352,30 @@
     font-size: 26px;
   }
 
+  .examinations-new {
+    padding: 20px;
+  }
+
+  .examinations-filter-list {
+    gap: 7px;
+  }
+
+  .examinations-filter {
+    font-size: 13px;
+  }
+
   .examination-card {
     align-items: flex-start;
     flex-direction: column;
     gap: 14px;
+  }
+
+  .examination-card-side {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .examination-actions {
+    justify-content: flex-start;
   }
 }
