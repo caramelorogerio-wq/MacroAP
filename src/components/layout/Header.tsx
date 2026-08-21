@@ -4,7 +4,7 @@ export default function Header() {
       <div className="header-container">
         <div className="logo">
           <img
-            src="/branding/macroap-logo.png"
+            src={`${import.meta.env.BASE_URL}branding/macroap-logo.png`}
             alt="MacroAP"
             className="logo-image"
           />
