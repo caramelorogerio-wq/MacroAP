@@ -4,46 +4,72 @@ const STORAGE_KEY = "macroap_examinations";
 
 export class ExaminationService {
   static getAll(): Examination[] {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored =
+      localStorage.getItem(STORAGE_KEY);
 
     if (!stored) {
       return [];
     }
 
     try {
-      const examinations = JSON.parse(stored) as Examination[];
+      const examinations =
+        JSON.parse(stored) as Examination[];
 
-      return examinations.map((examination) => ({
-        ...examination,
-        createdAt: new Date(examination.createdAt),
-        updatedAt: new Date(examination.updatedAt),
-      }));
+      return examinations.map(
+        (examination) => ({
+          ...examination,
+
+          answers:
+            examination.answers ?? {},
+
+          createdAt:
+            new Date(
+              examination.createdAt
+            ),
+
+          updatedAt:
+            new Date(
+              examination.updatedAt
+            ),
+        })
+      );
     } catch {
       return [];
     }
   }
 
-  static getById(id: string): Examination | undefined {
+  static getById(
+    id: string
+  ): Examination | undefined {
     return this.getAll().find(
-      (examination) => examination.id === id
+      (examination) =>
+        examination.id === id
     );
   }
 
-  static getByProtocolId(protocolId: string): Examination[] {
+  static getByProtocolId(
+    protocolId: string
+  ): Examination[] {
     return this.getAll().filter(
       (examination) =>
-        examination.protocolId === protocolId
+        examination.protocolId ===
+        protocolId
     );
   }
 
-  static create(examination: Examination): Examination {
-    const examinations = this.getAll();
+  static create(
+    examination: Examination
+  ): Examination {
+    const examinations =
+      this.getAll();
 
     examinations.push(examination);
 
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify(examinations)
+      JSON.stringify(
+        examinations
+      )
     );
 
     return examination;
@@ -59,44 +85,74 @@ export class ExaminationService {
 
     const examination: Examination = {
       id: crypto.randomUUID(),
+
       protocolId,
+
       organId,
+
       specimenTypeId,
+
       procedureId,
+
+      answers: {},
+
       createdAt: now,
+
       updatedAt: now,
+
       status: "Draft",
     };
 
-    return this.create(examination);
+    return this.create(
+      examination
+    );
   }
 
-  static update(examination: Examination): Examination {
-    const examinations = this.getAll();
+  static update(
+    examination: Examination
+  ): Examination {
+    const examinations =
+      this.getAll();
 
-    const index = examinations.findIndex(
-      (item) => item.id === examination.id
-    );
+    const index =
+      examinations.findIndex(
+        (item) =>
+          item.id ===
+          examination.id
+      );
 
     if (index === -1) {
-      return this.create(examination);
+      return this.create(
+        examination
+      );
     }
 
     examinations[index] = {
       ...examination,
+
+      answers:
+        examination.answers ?? {},
+
       updatedAt: new Date(),
     };
 
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify(examinations)
+      JSON.stringify(
+        examinations
+      )
     );
 
     return examinations[index];
   }
 
-  static start(id: string): Examination | undefined {
-    const examination = this.getById(id);
+  static setAnswer(
+    id: string,
+    fieldId: string,
+    value: unknown
+  ): Examination | undefined {
+    const examination =
+      this.getById(id);
 
     if (!examination) {
       return undefined;
@@ -104,12 +160,60 @@ export class ExaminationService {
 
     return this.update({
       ...examination,
+
+      answers: {
+        ...examination.answers,
+
+        [fieldId]: value,
+      },
+    });
+  }
+
+  static removeAnswer(
+    id: string,
+    fieldId: string
+  ): Examination | undefined {
+    const examination =
+      this.getById(id);
+
+    if (!examination) {
+      return undefined;
+    }
+
+    const answers = {
+      ...examination.answers,
+    };
+
+    delete answers[fieldId];
+
+    return this.update({
+      ...examination,
+      answers,
+    });
+  }
+
+  static start(
+    id: string
+  ): Examination | undefined {
+    const examination =
+      this.getById(id);
+
+    if (!examination) {
+      return undefined;
+    }
+
+    return this.update({
+      ...examination,
+
       status: "InProgress",
     });
   }
 
-  static complete(id: string): Examination | undefined {
-    const examination = this.getById(id);
+  static complete(
+    id: string
+  ): Examination | undefined {
+    const examination =
+      this.getById(id);
 
     if (!examination) {
       return undefined;
@@ -117,12 +221,16 @@ export class ExaminationService {
 
     return this.update({
       ...examination,
+
       status: "Completed",
     });
   }
 
-  static archive(id: string): Examination | undefined {
-    const examination = this.getById(id);
+  static archive(
+    id: string
+  ): Examination | undefined {
+    const examination =
+      this.getById(id);
 
     if (!examination) {
       return undefined;
@@ -130,18 +238,25 @@ export class ExaminationService {
 
     return this.update({
       ...examination,
+
       status: "Archived",
     });
   }
 
-  static delete(id: string): void {
-    const examinations = this.getAll().filter(
-      (examination) => examination.id !== id
-    );
+  static delete(
+    id: string
+  ): void {
+    const examinations =
+      this.getAll().filter(
+        (examination) =>
+          examination.id !== id
+      );
 
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify(examinations)
+      JSON.stringify(
+        examinations
+      )
     );
   }
 }

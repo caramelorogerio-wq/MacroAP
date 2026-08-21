@@ -1,16 +1,24 @@
 import { useNavigate } from "react-router-dom";
+
 import { AnatomicalSystemService } from "../services/anatomicalSystem.service";
+
 import "../styles/dashboard.css";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const systems = AnatomicalSystemService.getAll();
 
+  const openSystem = (systemId: string) => {
+    navigate(`/organs/${systemId}`);
+  };
+
   return (
     <>
       <section className="hero">
         <div className="hero-content">
-          <span className="hero-label">MACROAP</span>
+          <span className="hero-label">
+            MACROAP
+          </span>
 
           <h1>
             Protocolos Macroscópicos
@@ -19,8 +27,10 @@ export default function Dashboard() {
           </h1>
 
           <p>
-            Biblioteca digital de protocolos macroscópicos, organizada por
-            sistemas anatómicos e orientada para a prática clínica.
+            Biblioteca digital de protocolos
+            macroscópicos, organizada por
+            sistemas anatómicos e orientada para
+            a prática clínica.
           </p>
 
           <div className="hero-search">
@@ -36,13 +46,18 @@ export default function Dashboard() {
       <section className="systems">
         <div className="section-header">
           <div>
-            <span className="section-label">CONSULTA</span>
-            <h2>Sistemas Anatómicos</h2>
+            <span className="section-label">
+              CONSULTA
+            </span>
+
+            <h2>
+              Sistemas Anatómicos
+            </h2>
           </div>
 
           <p>
-            Selecione um sistema para consultar os órgãos e protocolos
-            disponíveis.
+            Selecione um sistema para consultar
+            os órgãos e protocolos disponíveis.
           </p>
         </div>
 
@@ -51,20 +66,29 @@ export default function Dashboard() {
             <article
               key={system.id}
               className="card"
-              onClick={() => navigate(`/system/${system.id}`)}
+              onClick={() =>
+                openSystem(system.id)
+              }
               role="button"
               tabIndex={0}
               onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  navigate(`/system/${system.id}`);
+                if (
+                  event.key === "Enter" ||
+                  event.key === " "
+                ) {
+                  openSystem(system.id);
                 }
               }}
             >
               <h3>{system.name}</h3>
 
-              <p>{system.description}</p>
+              <p>
+                {system.description}
+              </p>
 
-              <span className="card-link">Consultar protocolos →</span>
+              <span className="card-link">
+                Consultar protocolos →
+              </span>
             </article>
           ))}
         </div>

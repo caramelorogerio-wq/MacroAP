@@ -28,6 +28,9 @@ export interface Examination {
   /** Procedimento */
   procedureId: string;
 
+  /** Respostas aos campos do protocolo */
+  answers: Record<string, unknown>;
+
   /** Data de criação do exame */
   createdAt: Date;
 

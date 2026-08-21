@@ -10,6 +10,7 @@ import OrganPage from "./pages/OrganPage";
 import SpecimenPage from "./pages/SpecimenPage";
 import ProtocolPage from "./pages/ProtocolPage";
 import ExaminationsPage from "./pages/ExaminationsPage";
+import ExaminationPage from "./pages/ExaminationPage";
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
 
         <Route
           path="/examinations/:examinationId"
-          element={<ProtocolPage />}
+          element={<ExaminationPage />}
         />
       </Routes>
     </MainLayout>

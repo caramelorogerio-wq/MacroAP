@@ -5,7 +5,11 @@
  * ============================================================
  *
  * Representa um órgão pertencente a um
- * sistema anatómico.
+ * sistema anatómico principal.
+ *
+ * Um órgão pode estar relacionado com outros
+ * sistemas anatómicos sem ser duplicado
+ * no catálogo.
  *
  * Exemplos:
  * - Estômago
@@ -15,12 +19,14 @@
  */
 
 export interface Organ {
-
   /** Identificador único */
   id: string;
 
-  /** Sistema anatómico */
+  /** Sistema anatómico principal */
   anatomicalSystemId: string;
+
+  /** Sistemas anatómicos relacionados */
+  relatedSystemIds?: string[];
 
   /** Nome */
   name: string;
